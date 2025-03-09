@@ -1,0 +1,344 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ASpell.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:36:19 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:28:34 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ASpell.hpp"
+
+ASpell::ASpell (const std::string &name, const std::string &effects)
+{
+    this->name = name;
+    this->effects = effects;
+}
+
+const std::string &ASpell::getName() const
+{
+    return (this->name);
+}
+
+const std::string &ASpell::getEffects() const
+{
+    return (this->effects);
+}
+
+void ASpell::launch (const ATarget &tar) const
+{
+    tar.getHitBySpell(*this);
+}
+
+
+
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ASpell.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:02:05 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:41:23 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef ASPELL_HPP
+#define ASPELL_HPP
+
+#include <iostream>
+#include "ATarget.hpp"
+
+class ATarget;
+
+class ASpell
+{
+    protected :
+        std::string name;
+        std::string effects;
+    public :
+        ASpell (const std::string &name, const std::string &effects);
+        const std::string &getName() const;
+        const std::string &getEffects() const;
+        virtual ASpell *clone () const = 0;
+        void launch (const ATarget &tar) const;
+        virtual ~ASpell(){};
+ };
+
+ #endif/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ATarget.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:57:13 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:19:45 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ATarget.hpp"
+
+ATarget::ATarget (const std::string &type)
+{
+    this->type = type;
+}
+
+const std::string &ATarget::getType() const
+{
+    return (this->type);   
+}
+
+ void ATarget::getHitBySpell(const ASpell &s) const
+ {
+    std::cout << this->type << " has been " << s.getEffects() << "!" << std::endl;
+ }
+ 
+ /* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ATarget.hpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:11:49 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:19:38 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef ATARGET_HPP
+#define ATARGET_HPP
+
+#include <iostream>
+#include "ASpell.hpp"
+class ASpell;
+
+class ATarget
+{
+    protected :
+        std::string type;
+    public :
+        ATarget (const std::string &type);
+        const std::string &getType() const;
+        virtual ATarget *clone () const = 0;
+        void getHitBySpell(const ASpell &s) const;
+};
+
+#endif/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Dummy.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 06:04:00 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 07:19:41 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Dummy.hpp"
+
+
+Dummy::Dummy() : ATarget ("Target Practice Dummy")
+{}
+
+ATarget *Dummy::clone () const
+{
+    return (new Dummy());
+}
+
+
+Dummy::~Dummy()
+{}/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Dummy.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 06:04:25 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:59:48 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ATarget.hpp"
+
+class Dummy : public ATarget
+{
+    public :
+        Dummy();
+        ~Dummy();
+        ATarget *clone () const ;
+};/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fwoosh.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:52:33 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:24:16 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Fwoosh.hpp"
+
+Fwoosh::Fwoosh() :  ASpell("Fwoosh", "fwooshed")
+{
+}
+
+ASpell *Fwoosh::clone () const
+{
+    return (new Fwoosh());
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fwoosh.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 05:32:26 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 06:24:05 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ASpell.hpp"
+
+class Fwoosh : public ASpell
+{
+    public :
+        Fwoosh ();
+        ASpell *clone () const;
+};/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Warlock.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 04:31:37 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 08:03:20 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Warlock.hpp"
+
+Warlock::Warlock (const std::string &name, const std::string &title)
+{
+    this->name = name;
+    this->title = title;
+    std::cout << this->name << ": This looks like another boring day." << std::endl;
+}
+
+
+Warlock::~Warlock()
+{
+    std::cout << this->name << ": My job here is done!" << std::endl;
+    for (size_t i = 0; i < this->spells.size(); i++)
+    {
+            delete (this->spells[i]);
+    }
+}
+
+void Warlock::introduce() const
+{
+    std::cout << this->name << ": I am " << this->name << ", " << this->title << "!"<< std::endl;
+}
+
+const std::string &Warlock::getName() const
+{
+    return (this->name);
+}
+
+const std::string &Warlock::getTitle () const
+{
+    return (this->title);
+}
+
+
+void Warlock::setTitle (const std::string &title)
+{
+    this->title = title;
+}
+
+
+ void  Warlock::learnSpell (ASpell *ptr)
+ {
+    this->spells.push_back(ptr->clone());
+ }
+ 
+ void Warlock::forgetSpell (std::string name)
+ {
+    for (size_t i = 0; i < this->spells.size(); i++)
+    {
+        if (this->spells[i]->getName() == name)
+        {
+            delete (this->spells[i]);
+            this->spells.erase(this->spells.begin() + i);
+            break ;
+        }
+    }
+ }
+
+ void Warlock::launchSpell(const std::string &spellName, const ATarget &target)
+ {
+    for (size_t i = 0; i < this->spells.size(); i++)
+    {
+        if (this->spells[i]->getName() == spellName)
+        {
+            this->spells[i]->launch(target);
+            break ;
+        }
+    }
+ }/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Warlock.hpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezahiri <ezahiri@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 04:19:36 by ezahiri           #+#    #+#             */
+/*   Updated: 2025/03/08 07:59:32 by ezahiri          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#ifndef WARLOCK_HPP
+#define WARLOCK_HPP
+
+#include "ASpell.hpp"
+#include "ATarget.hpp"
+#include "Dummy.hpp"
+#include <iostream>
+#include <vector>
+#include "Fwoosh.hpp"
+
+class Warlock
+{
+    private :
+      std::string name;
+      std::string title;
+      std::vector<ASpell *> spells;
+
+    public :
+       Warlock (const std::string &name, const std::string &title);
+        const std::string &getName() const;
+        const std::string &getTitle () const;
+
+        void setTitle (const std::string &title);
+        void introduce() const;
+
+        void learnSpell (ASpell *ptr);
+        void forgetSpell (std::string name);
+         void launchSpell(const std::string &spellName, const ATarget &target);
+        ~Warlock ();
+};
+
+#endif

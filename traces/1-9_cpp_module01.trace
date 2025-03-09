@@ -1,0 +1,21 @@
+cpp_module01/Warlock.cpp:78:37: error: use of undeclared identifier 'tar'
+            this->spells[i]->launch(tar);
+                                    ^
+cpp_module01/Warlock.cpp:72:47: error: unused parameter 'spellName' [-Werror,-Wunused-parameter]
+ void Warlock::launchSpell(const std::string &spellName, const ATarget &target)
+                                              ^
+cpp_module01/Warlock.cpp:72:73: error: unused parameter 'target' [-Werror,-Wunused-parameter]
+ void Warlock::launchSpell(const std::string &spellName, const ATarget &target)
+                                                                        ^
+3 errors generated.
+
+<--------------~-~-~-~-~-~-~-~-~------------>
+Richard: This looks like another boring day.$
+Richard: I am Richard, the Titled!$
+Target Practice Dummy has been fwooshed!$
+Richard: My job here is done!$
+\n
+<--------------~-~-~-~-~-~-~-~-~------------>\n\n
+<--------------~-~-~-~-~-~-~-~-~------------>
+\n
+<--------------~-~-~-~-~-~-~-~-~------------>

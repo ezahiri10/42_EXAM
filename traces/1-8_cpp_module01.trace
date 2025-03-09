@@ -1,0 +1,18 @@
+cpp_module01/Warlock.cpp:72:16: error: out-of-line declaration of a member must be a definition [-Wout-of-line-declaration]
+ void Warlock::launchSpell(const std::string &spellName, const ATarget &target);
+      ~~~~~~~~~^
+cpp_module01/Warlock.cpp:73:2: error: expected unqualified-id
+ {
+ ^
+2 errors generated.
+
+<--------------~-~-~-~-~-~-~-~-~------------>
+Richard: This looks like another boring day.$
+Richard: I am Richard, the Titled!$
+Target Practice Dummy has been fwooshed!$
+Richard: My job here is done!$
+\n
+<--------------~-~-~-~-~-~-~-~-~------------>\n\n
+<--------------~-~-~-~-~-~-~-~-~------------>
+\n
+<--------------~-~-~-~-~-~-~-~-~------------>
